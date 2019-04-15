@@ -1,0 +1,13 @@
+---
+# tasks file for cloud_at_costa
+- name: Update hostname and copy ssh key
+  include: update_hosts_file_ssh_key.yml
+
+- name: Copy repo files to server
+  include: copy_repo_files.yml
+
+- name: Set DNS on server
+  include: set_dns.yml
+
+- name: System Update and install packages
+  include: update_yum_install_packages.yml

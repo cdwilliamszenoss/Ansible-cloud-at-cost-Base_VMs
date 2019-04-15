@@ -1,0 +1,50 @@
+---
+- name: yum-clean-metadata
+  command: yum clean metadata
+  args:
+    warn: no
+
+- name: Yum makecache
+  yum:
+     update_cache: yes
+     state: latest
+
+- name: Install ntp
+  yum:
+    name: ['ntp']
+    state: present
+
+- name: Enable/Start ntpd service
+  systemd:
+    name: 'ntpd'
+    state: started
+    enabled: yes
+
+- name: Install System Updates
+  yum: name='*' state=latest
+
+  register: system_update
+
+- name: Install epel repo
+  yum: 
+     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+     state: present
+
+- name: Yum makecache
+  yum:
+     update_cache: yes
+     state: latest
+
+- name: Boot into updated Kernel
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  when: system_update.changed
+
+- name: Wait for server online after reboot
+  wait_for_connection:
+    sleep: 5
+    delay: 5
+    timeout: 600
+
+

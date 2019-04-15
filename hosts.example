@@ -1,0 +1,25 @@
+# Use the FQDN for each node 
+# Hostname on server will be set to the names listed in this file.
+
+# This directive will set the hostname when connecting to the server with an IP address.
+# some_hostname ansible_host=185.19.47.85 ansible_port=5555
+
+
+# Common update all hosts
+[common]
+zenosscca.cwillenterprise.com ansible_host=14.17.2.40 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=avytu5
+
+# Centos 7 Servers
+[centos]
+hosts0.domain.com ansible_host=10.102.1.100
+
+
+# Ubuntu Servers
+[ubuntu]
+host1.domain.com
+host2.domain.com
+
+
+[cluster_group]
+ccm ansible_ssh_host=10.103.1.101 hostname=host1.domain.com
+ccs ansible_ssh_host=10.103.1.102 hostname=host2.domain.com

@@ -1,0 +1,20 @@
+---
+- name: Apply common configuration to all hosts
+  hosts: [common]
+  remote_user: root
+
+  vars:
+
+     # Packages
+     # epel_name: epel-release
+     # path_to_epel: /var/cache/yum/x86_64/7/epel/packages/epel-release-7-11.noarch.rpm
+     
+     # Yum configuration
+     yum_repos_d: "/etc/yum.repos.d/"
+
+     # Site specific configuration
+     dns_server: 8.8.8.8 
+     net_iface: "ifcfg-eth0"
+
+  roles:
+  - common

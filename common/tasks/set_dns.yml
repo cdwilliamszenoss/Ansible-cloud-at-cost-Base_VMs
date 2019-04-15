@@ -1,0 +1,15 @@
+---
+- name: Set DNS server
+  lineinfile:
+    backup: yes
+    path: "/etc/sysconfig/network-scripts/{{net_iface}}"
+    regexp: "^DNS1={{dns_server}}"
+    line: "DNS1={{dns_server}}"
+  register: dns_update
+
+- name: Restart network  
+  systemd: 
+    name: network
+    state: restarted
+  when: dns_update.changed 
+ 

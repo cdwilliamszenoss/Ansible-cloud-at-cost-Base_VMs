@@ -1,0 +1,17 @@
+---
+- name: Copy SSH Key
+  authorized_key:
+    user: root 
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}" 
+  failed_when : False
+  no_log : True
+
+- name: Set Hostname
+  shell: hostnamectl set-hostname "{{ inventory_hostname }}"
+
+- name: Update /etc/hosts 
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ansible_default_ipv4.address}}"
+    line: "{{ansible_default_ipv4.address}} {{inventory_hostname}}" 
