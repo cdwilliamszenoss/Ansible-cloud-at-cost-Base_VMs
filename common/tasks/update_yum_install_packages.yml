@@ -9,9 +9,9 @@
      update_cache: yes
      state: latest
 
-- name: Install ntp
+- name: Install ntp,nss,curl,libcurl
   yum:
-    name: ['ntp']
+    name: ['ntp','nss','curl','libcurl']
     state: present
 
 - name: Enable/Start ntpd service
